@@ -1,6 +1,4 @@
-# Don't Remove Credit @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot @Tech_VJ
-# Ask Doubt on telegram @KingVJ01
+
 
 class script(object):
     START_TXT = """<b><blockquote>ʜᴇʟʟᴏ {} 👋,</blockquote>
@@ -244,9 +242,11 @@ Nᴀᴍᴇ - {}"""
 
 𝗠𝗲𝘀𝘀𝗮𝗴𝗲 <b>: {}</b>"""
 
-    CAPTION = """<b>📂 ғɪʟᴇɴᴀᴍᴇ : {file_name}
-
-<b>⚙️ sɪᴢᴇ : {file_size}</b>""" 
+    CAPTION = """<b>📂 𝐅𝐢𝐥𝐞 𝐍𝐚𝐦𝐞: <b>{file_name}</b>  
+⚙️ 𝐒𝐢𝐳𝐞: <b>{file_size}</b>  
+  
+📥 Join Our Channel: <a href="https://t.me/AHMEN_BOTZZ">AHMEN_BOTZZ</a>
+""" 
 
     IMDB_TEMPLATE_TXT = """
 <b>Query: {qurey}
