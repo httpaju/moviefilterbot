@@ -7,7 +7,7 @@ class script(object):
   Use me in your group to <strong>earn unlimited money 💸</strong> effortlessly.
   Let’s make your group safer and more profitable!
 </b>
-</b>"""
+"""
 
     CLONE_START_TXT = """ʜᴇʟʟᴏ {}, ᴍʏ ɴᴀᴍᴇ <a href=https://t.me/{}>{}</a>
     
