@@ -2,7 +2,7 @@
 
 class script(object):
     START_TXT = """<b><blockquote>
-  𝙷𝙴𝙻𝙻𝙾 <span>{}</span> 👋,</blockquote>
+  𝙷𝙴𝙻𝙻𝙾 {} 👋,</blockquote>
   I am the latest, advanced, and powerful auto filter bot.
   Use me in your group to <strong>earn unlimited money 💸</strong> effortlessly.
   Let’s make your group safer and more profitable!
@@ -18,9 +18,9 @@ class script(object):
 
     ABOUT_TXT = """<b>⍟───[ ᴍʏ ᴅᴇᴛᴀɪʟꜱ ]───⍟</b>
 
-‣ <b>𝓜𝔂 𝓝𝓪𝓶𝓮 :</b> <a href="https://t.me/{}">{}</a><br>
+‣ <b>𝓜𝔂 𝓝𝓪𝓶𝓮 :</b> <a href="https://t.me/{}">{}</a>
 ‣ <b>𝓜𝔂 𝓑𝓮𝓼𝓽 𝓕𝓻𝓲𝓮𝓷𝓭 :</b> <a href="tg://settings">𝓣𝓱𝓲𝓼 𝓟𝓮𝓻𝓼𝓸𝓷</a>
-‣ <b>𝓓𝓮𝓿𝓮𝓵𝓸𝓹𝓮𝓻 :</b> <a href="{}">𝓞𝔀𝓷𝓮𝓻</a><br>
+‣ <b>𝓓𝓮𝓿𝓮𝓵𝓸𝓹𝓮𝓻 :</b> <a href="{}">𝓞𝔀𝓷𝓮𝓻</a>
 ‣ <b>𝓛𝓲𝓫𝓻𝓪𝓻𝔂 :</b> <a href="https://docs.pyrogram.org/">𝓟𝔂𝓻𝓸𝓰𝓻𝓪𝓶</a>
 ‣ <b>𝓛𝓪𝓷𝓰𝓾𝓪𝓰𝓮 :</b> <a href="https://www.python.org/download/releases/3.0/">𝓟𝔂𝓽𝓱𝓸𝓷 3</a>
 ‣ <b>𝓓𝓪𝓽𝓪𝓫𝓪𝓼𝓮 :</b> <a href="https://www.mongodb.com/">𝓜𝓸𝓷𝓰𝓸𝓓𝓫</a>
