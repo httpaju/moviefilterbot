@@ -1,9 +1,13 @@
 
 
 class script(object):
-    START_TXT = """<b><blockquote>ʜᴇʟʟᴏ {} 👋,</blockquote>
-    
-ɪ ᴀᴍ ʟᴀᴛᴇꜱᴛ ᴀᴅᴠᴀɴᴄᴇᴅ ᴀɴᴅ ᴘᴏᴡᴇʀꜰᴜʟ ᴀᴜᴛᴏ ꜰɪʟᴛᴇʀ ʙᴏᴛ. ʏᴏᴜ ᴄᴀɴ ᴜꜱᴇ ᴍᴇ ɪɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴛᴏ ᴇᴀʀɴ ᴜɴʟɪᴍɪᴛᴇᴅ ᴍᴏɴᴇʏ...💸</b>"""
+    START_TXT = """<b><blockquote>
+  𝙷𝙴𝙻𝙻𝙾 <span>{}</span> 👋,<br><br>
+  I am the latest, advanced, and powerful auto filter bot.<br>
+  Use me in your group to <span style="font-weight:bold; color:#228B22;">earn unlimited money 💸</span> effortlessly.<br><br>
+  Let’s make your group safer and more profitable!
+</blockquote></b>
+</b>"""
 
     CLONE_START_TXT = """ʜᴇʟʟᴏ {}, ᴍʏ ɴᴀᴍᴇ <a href=https://t.me/{}>{}</a>
     
