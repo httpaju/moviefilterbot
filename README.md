@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com/?lines=Welcome+to+TorrentBot!" alt="Typing SVG"/>
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=40&pause=1000&color=64F72E&center=true&vCenter=true&random=true&width=435&lines=Welcome+To+AJ+BOTS!" alt="Typing SVG"/>
 </p>
 
 <h1 align="center">Telegram Torrent Bot</h1>
