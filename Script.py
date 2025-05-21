@@ -2,11 +2,11 @@
 
 class script(object):
     START_TXT = """<b><blockquote>
-  𝙷𝙴𝙻𝙻𝙾 <span>{}</span> 👋,<br><br>
-  I am the latest, advanced, and powerful auto filter bot.<br>
-  Use me in your group to <span style="font-weight:bold; color:#228B22;">earn unlimited money 💸</span> effortlessly.<br><br>
+  𝙷𝙴𝙻𝙻𝙾 <span>{}</span> 👋,</blockquote>
+  I am the latest, advanced, and powerful auto filter bot.
+  Use me in your group to <strong>earn unlimited money 💸</strong> effortlessly.
   Let’s make your group safer and more profitable!
-</blockquote></b>
+</b>
 </b>"""
 
     CLONE_START_TXT = """ʜᴇʟʟᴏ {}, ᴍʏ ɴᴀᴍᴇ <a href=https://t.me/{}>{}</a>
@@ -18,14 +18,15 @@ class script(object):
 
     ABOUT_TXT = """<b>⍟───[ ᴍʏ ᴅᴇᴛᴀɪʟꜱ ]───⍟</b>
 
-‣ <b>ᴍʏ ɴᴀᴍᴇ :</b> <a href="https://t.me/{}">{}</a>  
-‣ <b>ᴍʏ ʙᴇsᴛ ғʀɪᴇɴᴅ :</b> <a href="tg://settings">ᴛʜɪs ᴘᴇʀsᴏɴ</a>  
-‣ <b>ᴅᴇᴠᴇʟᴏᴘᴇʀ :</b> <a href="{}">ᴏᴡɴᴇʀ</a>  
-‣ <b>ʟɪʙʀᴀʀʏ :</b> <a href="https://docs.pyrogram.org/">ᴘʏʀᴏɢʀᴀᴍ</a>  
-‣ <b>ʟᴀɴɢᴜᴀɢᴇ :</b> <a href="https://www.python.org/download/releases/3.0/">ᴘʏᴛʜᴏɴ 3</a>  
-‣ <b>ᴅᴀᴛᴀʙᴀsᴇ :</b> <a href="https://www.mongodb.com/">ᴍᴏɴɢᴏᴅʙ</a>  
-‣ <b>ʙᴏᴛ sᴇʀᴠᴇʀ :</b> <a href="#">ᴀᴊ ᴄʟᴏᴜᴅ sᴇʀᴠᴇʀ (ᴏɴʟʏ ꜰᴏʀ ᴀᴜᴛʜᴏʀɪᴢᴇᴅ ᴜsᴇʀs)</a>  
-‣ <b>ʙᴜɪʟᴅ sᴛᴀᴛᴜs :</b> ᴠ2.7.1 [sᴛᴀʙʟᴇ]
+‣ <b>𝓜𝔂 𝓝𝓪𝓶𝓮 :</b> <a href="https://t.me/{}">{}</a><br>
+‣ <b>𝓜𝔂 𝓑𝓮𝓼𝓽 𝓕𝓻𝓲𝓮𝓷𝓭 :</b> <a href="tg://settings">𝓣𝓱𝓲𝓼 𝓟𝓮𝓻𝓼𝓸𝓷</a>
+‣ <b>𝓓𝓮𝓿𝓮𝓵𝓸𝓹𝓮𝓻 :</b> <a href="{}">𝓞𝔀𝓷𝓮𝓻</a><br>
+‣ <b>𝓛𝓲𝓫𝓻𝓪𝓻𝔂 :</b> <a href="https://docs.pyrogram.org/">𝓟𝔂𝓻𝓸𝓰𝓻𝓪𝓶</a>
+‣ <b>𝓛𝓪𝓷𝓰𝓾𝓪𝓰𝓮 :</b> <a href="https://www.python.org/download/releases/3.0/">𝓟𝔂𝓽𝓱𝓸𝓷 3</a>
+‣ <b>𝓓𝓪𝓽𝓪𝓫𝓪𝓼𝓮 :</b> <a href="https://www.mongodb.com/">𝓜𝓸𝓷𝓰𝓸𝓓𝓫</a>
+‣ <b>𝓑𝓸𝓽 𝓢𝓮𝓻𝓿𝓮𝓻 :</b> <a href="#">𝓐𝓳 𝓒𝓵𝓸𝓾𝓭 𝓢𝓮𝓻𝓿𝓮𝓻 (𝓸𝓷𝓵𝔂 𝓯𝓸𝓻 𝓪𝓾𝓽𝓱𝓸𝓻𝓲𝔃𝓮𝓭 𝓾𝓼𝓮𝓻𝓼)</a>
+‣ <b>𝓑𝓾𝓲𝓵𝓭 𝓢𝓽𝓪𝓽𝓾𝓼 :</b> 𝓿2.7.1 [𝓼𝓽𝓪𝓫𝓵𝓮]
+
 """
 
     CLONE_ABOUT_TXT = """<b><blockquote>⍟───[ ᴍʏ ᴀʙᴏᴜᴛ ]───⍟</blockquote>
@@ -38,38 +39,42 @@ class script(object):
 ‣ ᴅᴀᴛᴀ ʙᴀsᴇ : <a href='https://www.mongodb.com/'>ᴍᴏɴɢᴏ ᴅʙ</a> 
 ‣ ʙᴜɪʟᴅ sᴛᴀᴛᴜs : ᴠ2.7.1 [sᴛᴀʙʟᴇ]></b>"""
 
-    CLONE_TXT = """<b>🌟 <u>CLONE MODE</u></b>
+    CLONE_TXT = """<b>✨ <u>CLONE MODE</u></b>
 
-<b>•</b> Yᴏᴜ ᴄᴀɴ ᴄʀᴇᴀᴛᴇ ʏᴏᴜʀ ᴏᴡɴ ᴄʟᴏɴᴇ ʙᴏᴛ ᴜsɪɴɢ <code>/clone</code> ᴄᴏᴍᴍᴀɴᴅ  
-<b>•</b> Bʀᴏᴀᴅᴄᴀsᴛ ᴍᴇssᴀɢᴇs ᴛᴏ ᴀʟʟ ʏᴏᴜʀ ᴄʟᴏɴᴇ ʙᴏᴛs  
-<b>•</b> Aᴄᴄᴇss ᴍɪʟʟɪᴏɴs ᴏғ ɪɴᴅᴇxᴇᴅ ғɪʟᴇs ᴡɪᴛʜᴏᴜᴛ ᴀᴅᴅɪɴɢ ᴀɴʏᴛʜɪɴɢ
+<b>•</b> 𝐘𝐨𝐮 𝐜𝐚𝐧 𝐜𝐫𝐞𝐚𝐭𝐞 𝐲𝐨𝐮𝐫 𝐨𝐰𝐧 𝐜𝐥𝐨𝐧𝐞 𝐛𝐨𝐭 𝐰𝐢𝐭𝐡 <code>/clone</code> 𝐜𝐨𝐦𝐦𝐚𝐧𝐝  
+<b>•</b> 𝐁𝐫𝐨𝐚𝐝𝐜𝐚𝐬𝐭 𝐦𝐞𝐬𝐬𝐚𝐠𝐞𝐬 𝐭𝐨 𝐚𝐥𝐥 𝐲𝐨𝐮𝐫 𝐜𝐥𝐨𝐧𝐞 𝐛𝐨𝐭𝐬  
+<b>•</b> 𝐀𝐜𝐜𝐞𝐬𝐬 𝐦𝐢𝐥𝐥𝐢𝐨𝐧𝐬 𝐨𝐟 𝐢𝐧𝐝𝐞𝐱𝐞𝐝 𝐟𝐢𝐥𝐞𝐬 𝐰𝐢𝐭𝐡𝐨𝐮𝐭 𝐚𝐝𝐝𝐢𝐧𝐠 𝐚𝐧𝐲 𝐞𝐱𝐭𝐫𝐚 𝐜𝐡𝐚𝐫𝐠𝐞𝐬
 
-👨‍💻 <b>Cᴏᴍᴍᴀɴᴅ :</b> <code>/clone</code>
+👨‍💻 <b>𝐂𝐨𝐦𝐦𝐚𝐧𝐝 :</b> <code>/clone</code>
 """
 
     SUBSCRIPTION_TXT = """
-<b>🎁 ɢᴇᴛ ғʀᴇᴇ ᴘʀᴇᴍɪᴜᴍ ғᴏʀ {}</b>
+<b>🎁 𝗚𝗲𝘁 𝗙𝗿𝗲𝗲 𝗣𝗿𝗲𝗺𝗶𝘂𝗺 𝗳𝗼𝗿 {}</b>
 
-<b>🔗 Rᴇғᴇʀʀᴀʟ Lɪɴᴋ:</b> <a href="https://telegram.me/{}?start=AJ-{}">CLICK HERE</a>
+<b>🔗 𝗥𝗲𝗳𝗲𝗿𝗿𝗮𝗹 𝗟𝗶𝗻𝗸:</b> <a href="https://telegram.me/{}?start=AJ-{}">Tap Here!</a>
 
-<b>📢 Sʜᴀʀᴇ ʏᴏᴜʀ ʀᴇғᴇʀʀᴀʟ ʟɪɴᴋ ᴡɪᴛʜ ғʀɪᴇɴᴅs, ғᴀᴍɪʟʏ, ɢʀᴏᴜᴘs, ᴀɴᴅ ᴄʜᴀɴɴᴇʟs.</b>
+<b>📢 𝗦𝗵𝗮𝗿𝗲 𝘆𝗼𝘂𝗿 𝗿𝗲𝗳𝗲𝗿𝗿𝗮𝗹 𝗹𝗶𝗻𝗸 𝘄𝗶𝘁𝗵 𝗳𝗿𝗶𝗲𝗻𝗱𝘀, 𝗳𝗮𝗺𝗶𝗹𝘆, 𝗴𝗿𝗼𝘂𝗽𝘀, 𝗮𝗻𝗱 𝗰𝗵𝗮𝗻𝗻𝗲𝗹𝘀.</b>
 
-<b>✅ Wʜᴇɴ {} ᴜɴɪǫᴜᴇ ᴜsᴇʀs sᴛᴀʀᴛ ᴛʜᴇ ʙᴏᴛ ᴜsɪɴɢ ʏᴏᴜʀ ʟɪɴᴋ, ʏᴏᴜ'ʟʟ ʙᴇ ᴀᴅᴅᴇᴅ ᴛᴏ ᴛʜᴇ ᴘʀᴇᴍɪᴜᴍ ʟɪsᴛ ᴀᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟʏ.</b>
+<b>✅ 𝗪𝗵𝗲𝗻 {} 𝘂𝗻𝗶𝗾𝘂𝗲 𝘂𝘀𝗲𝗿𝘀 𝘀𝘁𝗮𝗿𝘁 𝘂𝘀𝗶𝗻𝗴 𝘆𝗼𝘂𝗿 𝗹𝗶𝗻𝗸, 𝘆𝗼𝘂’𝗹𝗹 𝗯𝗲 𝗮𝘂𝘁𝗼𝗺𝗮𝘁𝗶𝗰𝗮𝗹𝗹𝘆 𝗮𝗱𝗱𝗲𝗱 𝘁𝗼 𝘁𝗵𝗲 𝗽𝗿𝗲𝗺𝗶𝘂𝗺 𝗹𝗶𝘀𝘁.</b>
 
-<b>💳 Tᴏ ʙᴜʏ ᴀ ᴘᴀɪᴅ ᴘʟᴀɴ ᴍᴀɴᴜᴀʟʟʏ, ᴜsᴇ:</b> <code>/plan</code>
+<b>💳 𝗧𝗼 𝗯𝘂𝘆 𝗮 𝗽𝗮𝗶𝗱 𝗽𝗹𝗮𝗻 𝗺𝗮𝗻𝘂𝗮𝗹𝗹𝘆, 𝘂𝘀𝗲:</b> <code>/plan</code>
 """
 
-    MANUELFILTER_TXT = """<b>ʜᴇʟᴘ: <b>ꜰɪʟᴛᴇʀꜱ</b></b>
-- ꜰɪʟᴛᴇʀ ɪꜱ ᴀ ꜰᴇᴀᴛᴜʀᴇ ᴡᴇʀᴇ ᴜꜱᴇʀꜱ ᴄᴀɴ ꜱᴇᴛ ᴀᴜᴛᴏᴍᴀᴛᴇᴅ ʀᴇᴘʟɪᴇꜱ ꜰᴏʀ ᴀ ᴘᴀʀᴛɪᴄᴜʟᴀʀ ᴋᴇʏᴡᴏʀᴅ ᴀɴᴅ ɪ ᴡɪʟʟ ʀᴇꜱᴘᴏɴᴅ ᴡʜᴇɴᴇᴠᴇʀ ᴀ ᴋᴇʏᴡᴏʀᴅ ɪꜱ ꜰᴏᴜɴᴅ ɪɴ ᴛʜᴇ ᴍᴇꜱꜱᴀɢᴇ
+    MANUELFILTER_TXT = """<b>🛠️ ʜᴇʟᴘ: <u>ꜰɪʟᴛᴇʀꜱ</u></b>
+
+- ᴛʜᴇ ꜰɪʟᴛᴇʀ ᴘʀᴏᴠɪᴅᴇs ᴀɴ ᴀᴜᴛᴏᴍᴀᴛᴇᴅ ʀᴇꜱᴘᴏɴsᴇ ᴛᴏ ᴀ ᴘᴀʀᴛɪᴄᴜʟᴀʀ ᴋᴇʏᴡᴏʀᴅ ᴛʜᴀᴛ ᴜsᴇʀs ᴄᴀɴ sᴇᴛ ɪɴ ᴀ ᴄʜᴀᴛ. ᴡʜᴇɴ ᴛʜᴇ ᴋᴇʏᴡᴏʀᴅ ɪs ᴅᴇᴛᴇᴄᴛᴇᴅ, ᴛʜᴇ ʙᴏᴛ ʀᴇᴘʟɪᴇs ᴀᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟʏ.
+
 <b>ɴᴏᴛᴇ:</b>
-1. ᴛʜɪꜱ ʙᴏᴛ ꜱʜᴏᴜʟᴅ ʜᴀᴠᴇ ᴀᴅᴍɪɴ ᴘʀɪᴠɪʟᴇɢᴇ.
-2. ᴏɴʟʏ ᴀᴅᴍɪɴꜱ ᴄᴀɴ ᴀᴅᴅ ꜰɪʟᴛᴇʀꜱ ɪɴ ᴀ ᴄʜᴀᴛ.
-3. ᴀʟᴇʀᴛ ʙᴜᴛᴛᴏɴꜱ ʜᴀᴠᴇ ᴀ ʟɪᴍɪᴛ ᴏꜰ 64 ᴄʜᴀʀᴀᴄᴛᴇʀꜱ.
-<b>Cᴏᴍᴍᴀɴᴅs Aɴᴅ Usᴀɢᴇ:</b>
-• /filter - <code>ᴀᴅᴅ ᴀ ꜰɪʟᴛᴇʀ ɪɴ ᴀ ᴄʜᴀᴛ</code>
-• /filters - <code>ʟɪꜱᴛ ᴀʟᴇ ᴛʜᴇ ꜰɪʟᴛᴇʀꜱ ᴏꜰ ᴀ ᴄʜᴀᴛ</code>
-• /del - <code>ᴅᴇʟᴇᴛᴇ ᴀ ꜱᴘᴇᴄɪꜰɪᴄ ꜰɪʟᴛᴇʀ ɪɴ ᴀ ᴄʜᴀᴛ</code>
-• /delall - <code>ᴅᴇʟᴇᴛᴇ ᴛʜᴇ ᴡʜᴏʟᴇ ꜰɪʟᴛᴇʀꜱ ɪɴ ᴀ ᴄʜᴀᴛ (ᴄʜᴀᴛ ᴏᴡɴᴇʀ ᴏɴʟʏ)</code>"""
+1. ᴛʜɪs ʙᴏᴛ ᴍᴜsᴛ ʜᴀᴠᴇ ᴀᴅᴍɪɴ ᴘʀɪᴠɪʟᴇɢᴇ ɪɴ ᴛʜᴇ ᴄʜᴀᴛ.
+2. ᴏɴʟʏ ᴀᴅᴍɪɴs ᴄᴀɴ ᴀᴅᴅ ᴏʀ ᴍᴀɴᴀɢᴇ ꜰɪʟᴛᴇʀꜱ.
+3. ᴀʟᴇʀᴛ ʙᴜᴛᴛᴏɴs ᴀʀᴇ ʟɪᴍɪᴛᴇᴅ ᴛᴏ 64 ᴄʜᴀʀᴀᴄᴛᴇʀꜱ.
+
+<b>ᴄᴏᴍᴍᴀɴᴅs ᴀɴᴅ ᴜsᴀɢᴇ:</b>
+• <code>/filter</code> — ᴀᴅᴅ ᴀ ɴᴇᴡ ꜰɪʟᴛᴇʀ ᴛᴏ ᴛʜᴇ ᴄʜᴀᴛ  
+• <code>/filters</code> — ʟɪsᴛ ᴀʟʟ ᴄᴜʀʀᴇɴᴛ ꜰɪʟᴛᴇʀꜱ ɪɴ ᴛʜᴇ ᴄʜᴀᴛ  
+• <code>/del</code> — ᴅᴇʟᴇᴛᴇ ᴀ ꜰɪʟᴛᴇʀ ʙʏ ɪᴅ ɪɴ ᴛʜᴇ ᴄʜᴀᴛ  
+• <code>/delall</code> — ᴅᴇʟᴇᴛᴇ ᴀʟʟ ꜰɪʟᴛᴇʀꜱ (ᴄʜᴀᴛ ᴏᴡɴᴇʀ ᴏɴʟʏ)
+"""
 
  
 
