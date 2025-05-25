@@ -782,7 +782,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         files = files_
         title = files['file_name']
         size = get_size(files['file_size'])
-        f_caption = files['caption']
+        f_caption = f"{files['file_name']}"
         if f_caption is None:
             f_caption = f"{files['file_name']}"
 
