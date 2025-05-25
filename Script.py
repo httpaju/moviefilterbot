@@ -1,8 +1,8 @@
 
 
 class script(object):
-    START_TXT = """<b><blockquote>
-  𝙷𝙴𝙻𝙻𝙾 {} 👋,</blockquote>
+    START_TXT = """<b>
+  𝙷𝙴𝙻𝙻𝙾 {} 👋,
   I am the latest, advanced, and powerful auto filter bot.
   Use me in your group to <strong>earn unlimited money 💸</strong> effortlessly.
   Let’s make your group safer and more profitable!
@@ -51,7 +51,7 @@ class script(object):
     SUBSCRIPTION_TXT = """
 <b>🎁 𝗚𝗲𝘁 𝗙𝗿𝗲𝗲 𝗣𝗿𝗲𝗺𝗶𝘂𝗺 𝗳𝗼𝗿 {}</b>
 
-<b>🔗 𝗥𝗲𝗳𝗲𝗿𝗿𝗮𝗹 𝗟𝗶𝗻𝗸:</b> <a href="https://telegram.me/{}?start=AJ-{}">Tap Here!</a>
+<b>🔗 𝗥𝗲𝗳𝗲𝗿𝗿𝗮𝗹 𝗟𝗶𝗻𝗸:</b> <code>https://telegram.me/{}?start=AJ-{}</code>
 
 <b>📢 𝗦𝗵𝗮𝗿𝗲 𝘆𝗼𝘂𝗿 𝗿𝗲𝗳𝗲𝗿𝗿𝗮𝗹 𝗹𝗶𝗻𝗸 𝘄𝗶𝘁𝗵 𝗳𝗿𝗶𝗲𝗻𝗱𝘀, 𝗳𝗮𝗺𝗶𝗹𝘆, 𝗴𝗿𝗼𝘂𝗽𝘀, 𝗮𝗻𝗱 𝗰𝗵𝗮𝗻𝗻𝗲𝗹𝘀.</b>
 
