@@ -9,8 +9,8 @@ id_pattern = re.compile(r'^.\d+$')
 
 # Bot information
 SESSION = environ.get('SESSION', 'StreamNovaBot')
-API_ID = int(environ.get('API_ID', '29874922'))
-API_HASH = environ.get('API_HASH', 'e80a28c5f69b8f9a52f646a6bbba3326')
+API_ID = int(environ.get('API_ID', '2987****'))
+API_HASH = environ.get('API_HASH', 'e80a28c5f69b8f9a52f646a6bbba****')
 BOT_TOKEN = environ.get('BOT_TOKEN', "7991720790:AAErSGID5sClKhZyPJV5GlHr9pl2eAF60NU")
 
 
@@ -57,7 +57,7 @@ DELETE_CHANNELS = [int(dch) if id_pattern.search(dch) else dch for dch in enviro
 
 
 # MongoDB information
-DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://ahmen:ajmalaju123@streamnova.oacwdnb.mongodb.net/?retryWrites=true&w=majority")   # IF Multiple Database Is False Then Fill Only This Database Url.
+DATABASE_URI = environ.get('DATABASE_URI', "***")   # IF Multiple Database Is False Then Fill Only This Database Url.
 DATABASE_NAME = environ.get('DATABASE_NAME', "streamnova")
 COLLECTION_NAME = environ.get('COLLECTION_NAME', 'ajcollection')
 
@@ -81,7 +81,7 @@ PAYMENT_TEXT = environ.get('PAYMENT_TEXT', '<b>- ᴀᴠᴀɪʟᴀʙʟᴇ ᴘʟ�
 
 # Clone Information : If Clone Mode Is True Then Bot Clone Other Bots.
 CLONE_MODE = bool(environ.get('CLONE_MODE', True)) # Set True or False
-CLONE_DATABASE_URI = environ.get('CLONE_DATABASE_URI', "mongodb+srv://clone:movie@bot.2cr6stx.mongodb.net/?retryWrites=true&w=majority&appName=bot") # Necessary If clone mode is true
+CLONE_DATABASE_URI = environ.get('CLONE_DATABASE_URI', "****") # Necessary If clone mode is true
 PUBLIC_FILE_CHANNEL = environ.get('PUBLIC_FILE_CHANNEL', 'streamnovapublic') # Public Channel Username Without @ or without https://t.me/ and Bot Is Admin With Full Right.
 
 
