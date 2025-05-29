@@ -1,0 +1,52 @@
+project:
+  name: MovieFilterBot
+  type: python
+  version: 1.0.0
+
+build:
+  command: pip3 install -U -r requirements.txt
+
+run:
+  command: python3 bot.py
+
+components:
+  - name: moviefilterbot
+    source:
+      path: .
+    env:
+      - name: ADMINS
+        value: "7458589926 6565067242"
+      - name: API_HASH
+        value: "e80a28c5f69b8f9a52f646a6bbba3326"
+      - name: API_ID
+        value: "29874922"
+      - name: AUTO_APPROVE_MODE
+        value: "True"
+      - name: BOT_TOKEN
+        value: "7991720790:AAErSGID5sClKhZyPJV5GlHr9pl2eAF60NU"
+      - name: CHANNELS
+        value: "-1002535441393"
+      - name: CLONE_DATABASE_URI
+        value: "mongodb+srv://ajmalajapplications:movie1@cluster0.tmxk1rb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+      - name: CLONE_MODE
+        value: "True"
+      - name: DATABASE_URI
+        value: "mongodb+srv://ajmalajapplications:movie1@cluster0.tmxk1rb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+      - name: F_DB_URI
+        value: "mongodb+srv://moviebot:movie@cluster0.sg2thsv.mongodb.net/?retryWrites=true&w=majority"
+      - name: LOG_CHANNEL
+        value: "-1002620066392"
+      - name: MULTIPLE_DATABASE
+        value: "True"
+      - name: O_DB_URI
+        value: "mongodb+srv://shareefmoosa135:movie@cluster0.0vkdzqo.mongodb.net/?retryWrites=true&w=majority"
+      - name: PICS
+        value: "https://envs.sh/783.jpg"
+      - name: RENAME_MODE
+        value: "True"
+      - name: REQ_PICS
+        value: "https://telegramchannels.me/storage/media-logo/2010/movie_request_groups.jpg"
+      - name: S_DB_URI
+        value: "mongodb+srv://ahmen:movie@streamnova.oacwdnb.mongodb.net/?retryWrites=true&w=majority&appName=streamnova"
+      - name: STREAM_MODE
+        value: "False"
