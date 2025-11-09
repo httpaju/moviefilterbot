@@ -1,4 +1,8 @@
+# Don't Remove Credit @VJ_Botz
+# Subscribe YouTube Channel For Amazing Bot @Tech_VJ
+# Ask Doubt on telegram @KingVJ01
 
+# Clone Code Credit : YT - @Tech_VJ / TG - @VJ_Bots / GitHub - @VJBots
 
 import os
 import requests
@@ -23,21 +27,21 @@ CORS(app)
 SITES_TO_MONITOR = [
     'https://google.com',
     'https://github.com',
-
-    'https://ajweyahub.ajapplications.in.net' # A test site that might be down
+    'https://your-own-website.com', # Add your site
+    'https://a-site-that-is-down.com' # A test site that might be down
 ]
 
 # --- Telegram Bot Configuration ---
-TELEGRAM_BOT_TOKEN = os.environ.get('BOT_TOKEN')
-TELEGRAM_CHAT_ID = os.environ.get('ADMIN')
+TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
+TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID')
 
 # --- INITIALIZE THE BOT ---
 bot = None
 if TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID:
     bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN)
-    print("[Uptime Bot] Telegram bot initialized. Alerts are active.", flush=True)
+    print("[KeepAlive] Telegram bot initialized. Alerts are active.", flush=True)
 else:
-    print("[Uptime Bot] Telegram Token or Chat ID not found. Alerts are DISABLED.", flush=True)
+    print("[KeepAlive] Telegram Token or Chat ID not found. Alerts are DISABLED.", flush=True)
 # --------------------------
 
 # This dictionary will store the status of each site in memory
@@ -54,15 +58,15 @@ for url in SITES_TO_MONITOR:
 def send_telegram_alert(message):
     """Sends a message using the pyTelegramBotAPI (telebot)."""
     if not bot:
-        print('[Uptime Bot] Telegram bot is not initialized. Skipping alert.', flush=True)
+        print('[KeepAlive] Telegram bot is not initialized. Skipping alert.', flush=True)
         return
 
     try:
         # The user-friendly way to send a message:
         bot.send_message(TELEGRAM_CHAT_ID, message, parse_mode='Markdown')
-        print(f"[Uptime Bot] Telegram alert sent: {message}", flush=True)
+        print(f"[KeepAlive] Telegram alert sent: {message}", flush=True)
     except Exception as error:
-        print(f"[Uptime Bot] Failed to send Telegram alert: {error}", flush=True)
+        print(f"[KeepAlive] Failed to send Telegram alert: {error}", flush=True)
 
 def check_site_status(url):
     """Checks a single site's status."""
@@ -84,11 +88,11 @@ def check_site_status(url):
     except requests.exceptions.Timeout:
         new_status = 'DOWN'
         status_code = 'Timeout'
-        print(f"[Uptime Bot] Error checking {url}: Request timed out", flush=True)
+        print(f"[KeepAlive] Error checking {url}: Request timed out", flush=True)
     except requests.exceptions.RequestException as error:
         new_status = 'DOWN'
         status_code = 'Error'
-        print(f"[Uptime Bot] Error checking {url}: {error}", flush=True)
+        print(f"[KeepAlive] Error checking {url}: {error}", flush=True)
 
     end_time = time.time()
     response_time = round((end_time - start_time) * 1000)
@@ -108,11 +112,11 @@ def check_site_status(url):
         'responseTime': f"{response_time}ms",
         'lastChecked': datetime.now(IST).strftime('%Y-%m-%d %I:%M:%S %p')
     }
-    print(f"[Uptime Bot] Checked {url}: {new_status} ({status_code})", flush=True)
+    print(f"[KeepAlive] Checked {url}: {new_status} ({status_code})", flush=True)
 
 def check_all_sites():
     """Triggers a status check for all monitored sites."""
-    print("[Uptime Bot] Running scheduled site checks...", flush=True)
+    print("[KeepAlive] Running scheduled site checks...", flush=True)
     for url in SITES_TO_MONITOR:
         check_site_status(url)
 
@@ -139,13 +143,16 @@ if __name__ == '__main__':
     scheduler = BackgroundScheduler(timezone=str(IST))
     scheduler.add_job(check_all_sites, 'interval', minutes=1)
     scheduler.start()
-    print("[Uptime Bot] Scheduler started. Checks will run every minute.", flush=True)
+    print("[KeepAlive] Scheduler started. Checks will run every minute.", flush=True)
     
     # 2. Run one check immediately on startup
-    print("[Uptime Bot] Running initial site check on startup...", flush=True)
+    print("[KeepAlive] Running initial site check on startup...", flush=True)
     check_all_sites()
     
     # 3. Make sure scheduler shuts down nicely when the app exits
     atexit.register(lambda: scheduler.shutdown())
     
-  
+    # 4. Start the Flask web server
+    port = int(os.environ.get('PORT', 3000))
+    print(f"[KeepAlive] Starting web server on port {port}", flush=True)
+    app.run(host='0.0.0.0', port=port)
