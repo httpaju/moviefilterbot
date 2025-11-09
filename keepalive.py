@@ -27,8 +27,8 @@ CORS(app)
 SITES_TO_MONITOR = [
     'https://google.com',
     'https://github.com',
-    'https://your-own-website.com', # Add your site
-    'https://a-site-that-is-down.com' # A test site that might be down
+    'https://ajweyahub.ajapplications.in.net' # Add your site
+     # A test site that might be down
 ]
 
 # --- Telegram Bot Configuration ---
