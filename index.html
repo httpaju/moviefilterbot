@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Status</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+        header {
+            background-color: #333;
+            padding: 20px 30px;
+            border-bottom: 1px solid #444;
+        }
+        header h1 {
+            margin: 0;
+            color: #ffffff;
+        }
+        header p {
+            margin: 5px 0 0;
+            color: #b0b0b0;
+            font-size: 0.9em;
+        }
+        #status-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            border-bottom: 1px solid #333;
+            transition: background-color 0.3s ease;
+        }
+        .status-item:last-child {
+            border-bottom: none;
+        }
+        .site-info {
+            flex-grow: 1;
+        }
+        .site-info .url {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #eee;
+            word-break: break-all;
+        }
+        .site-info .last-checked {
+            font-size: 0.8em;
+            color: #888;
+            margin-top: 5px;
+        }
+        .site-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .status-up {
+            background-color: #28a745;
+            color: #ffffff;
+        }
+        .status-down {
+            background-color: #dc3545;
+            color: #ffffff;
+        }
+        .status-checking {
+            background-color: #ffc107;
+            color: #212529;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        .response-time {
+            font-size: 0.9em;
+            color: #aaa;
+            width: 80px;
+            text-align: right;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8em;
+            color: #777;
+            border-top: 1px solid #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Server Status</h1>
+            <p>Live uptime monitoring for critical services.</p>
+        </header>
+
+        <ul id="status-list">
+            <!-- Status items will be injected here by JavaScript -->
+        </ul>
+        
+        <footer id="footer-time">
+            Loading...
+        </footer>
+    </div>
+
+    <script>
+        function fetchStatus() {
+            // Fetch data from the /api/status endpoint of our keepalive.py server
+            fetch('/api/status')
+                .then(response => response.json())
+                .then(data => {
+                    const statusList = document.getElementById('status-list');
+                    statusList.innerHTML = ''; // Clear old list
+
+                    // Loop through each site from the server
+                    for (const url in data) {
+                        const site = data[url];
+                        
+                        let statusClass = 'status-checking';
+                        let statusText = 'Checking';
+                        if (site.status === 'UP') {
+                            statusClass = 'status-up';
+                            statusText = 'Up';
+                        } else if (site.status === 'DOWN') {
+                            statusClass = 'status-down';
+                            statusText = 'Down';
+                        }
+
+                        const responseTime = site.responseTime || '---';
+
+                        const item = document.createElement('li');
+                        item.className = 'status-item';
+                        item.innerHTML = `
+                            <div class="site-info">
+                                <div class="url">${url}</div>
+                                <div class="last-checked">Last checked: ${site.lastChecked || 'N/A'}</div>
+                            </div>
+                            <div class="site-status">
+                                <span class="response-time">${responseTime}</span>
+                                <span class="status-badge ${statusClass}">${statusText}</span>
+                            </div>
+                        `;
+                        statusList.appendChild(item);
+                    }
+                    
+                    // Update footer timestamp
+                    const now = new Date();
+                    document.getElementById('footer-time').innerText = `Last updated: ${now.toLocaleTimeString()}`;
+                })
+                .catch(error => {
+                    console.error('Error fetching status:', error);
+                    document.getElementById('footer-time').innerText = 'Error loading status.';
+                });
+        }
+
+        // Fetch status immediately on page load
+        fetchStatus();
+
+        // And then fetch status every 10 seconds
+        setInterval(fetchStatus, 10000);
+    </script>
+</body>
+</html>
