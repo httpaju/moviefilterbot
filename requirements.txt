@@ -3,7 +3,7 @@ tgcrypto
 requests
 bs4
 shortzy
-
+telebot
 aiohttp
 yt-dlp
 ytthumb
@@ -39,3 +39,6 @@ ffmpeg-python>=0.2.0
 openai==0.25.0
 git+https://github.com/Joelkb/cinemagoer
 pytz
+flask
+flask-cors
+
