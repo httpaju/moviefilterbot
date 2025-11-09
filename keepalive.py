@@ -23,13 +23,13 @@ CORS(app)
 SITES_TO_MONITOR = [
     'https://google.com',
     'https://github.com',
-    'https://your-own-website.com', # Add your site
-    'https://a-site-that-is-down.com' # A test site that might be down
+
+    'https://ajweyahub.ajapplications.in.net' # A test site that might be down
 ]
 
 # --- Telegram Bot Configuration ---
-TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
-TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID')
+TELEGRAM_BOT_TOKEN = os.environ.get('BOT_TOKEN')
+TELEGRAM_CHAT_ID = os.environ.get('ADMIN')
 
 # --- INITIALIZE THE BOT ---
 bot = None
