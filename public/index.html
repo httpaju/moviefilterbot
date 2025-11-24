@@ -2,189 +2,1211 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server Status</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AJMDB - Movie App</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        /* --- 1. VARIABLES & RESET (iOS BLUE THEME) --- */
+        :root {
+            --primary: #0A84FF; /* iOS System Blue */
+            --primary-dark: #0060df;
+            --bg-color: #000000;
+            --surface: #1c1c1e; /* iOS Dark Mode Surface */
+            --surface-glass: rgba(28, 28, 30, 0.75);
+            --text-main: #ffffff;
+            --text-sec: #8e8e93;
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --radius-xl: 24px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #121212;
-            color: #e0e0e0;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'SF Pro Display', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            padding-bottom: 80px; /* Space for bottom nav */
+            overflow-x: hidden;
         }
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background-color: #1e1e1e;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            overflow: hidden;
-        }
+
+        /* --- 2. HEADER & SEARCH --- */
         header {
-            background-color: #333;
-            padding: 20px 30px;
-            border-bottom: 1px solid #444;
-        }
-        header h1 {
-            margin: 0;
-            color: #ffffff;
-        }
-        header p {
-            margin: 5px 0 0;
-            color: #b0b0b0;
-            font-size: 0.9em;
-        }
-        #status-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .status-item {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 30px;
-            border-bottom: 1px solid #333;
-            transition: background-color 0.3s ease;
         }
-        .status-item:last-child {
-            border-bottom: none;
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
         }
-        .site-info {
-            flex-grow: 1;
+
+        .search-bar {
+            position: relative;
+            width: 45%;
         }
-        .site-info .url {
-            font-size: 1.1em;
-            font-weight: 600;
-            color: #eee;
-            word-break: break-all;
+
+        .search-bar input {
+            width: 100%;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            padding: 10px 40px 10px 15px;
+            border-radius: 12px;
+            color: white;
+            font-size: 0.9rem;
+            transition: 0.3s;
         }
-        .site-info .last-checked {
-            font-size: 0.8em;
-            color: #888;
-            margin-top: 5px;
+
+        .search-bar input:focus {
+            background: rgba(255,255,255,0.15);
+            outline: none;
+            box-shadow: 0 0 0 2px var(--primary);
         }
-        .site-status {
+
+        .search-bar i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-sec);
+        }
+
+        /* --- 3. CATEGORY FILTERS (CHIPS) --- */
+        .category-scroller {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 1rem 1.5rem;
+            scrollbar-width: none; /* Firefox */
+        }
+        .category-scroller::-webkit-scrollbar { display: none; }
+
+        .chip {
+            padding: 8px 16px;
+            background: var(--surface);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            color: var(--text-sec);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chip.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(10, 132, 255, 0.4);
+        }
+
+        /* --- 4. MAIN LAYOUT & SCROLLING ROWS --- */
+        .section-header {
+            padding: 0 1.5rem;
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .see-all {
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* Horizontal Scroll Container (Netflix Style) */
+        .movie-row {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding: 1rem 1.5rem;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+        }
+        .movie-row::-webkit-scrollbar { display: none; }
+
+        /* Vertical Grid for Search/Filters */
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+        }
+
+        /* --- 5. MOVIE CARD UI --- */
+        .card {
+            flex: 0 0 140px; /* Fixed width for rows */
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .movie-grid .card { flex: auto; width: 100%; }
+
+        .card:active { transform: scale(0.96); }
+
+        .card img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 10px;
+            opacity: 1;
+        }
+
+        .card-rating {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: bold;
             display: flex;
             align-items: center;
+            gap: 4px;
+        }
+        .card-rating i { color: #FFD700; }
+
+        .card-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-year {
+            font-size: 0.75rem;
+            color: var(--text-sec);
+        }
+
+        /* --- 6. BOTTOM NAVIGATION (APP STYLE) --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-sec);
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-item i { font-size: 1.2rem; }
+        
+        .nav-item.active { color: var(--primary); }
+        
+        /* --- 7. MODAL (iOS SHEET STYLE) --- */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            display: flex;
+            align-items: flex-end; /* Bottom sheet on mobile */
+        }
+
+        .modal-backdrop.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: #1c1c1e;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            height: 90vh;
+            border-radius: 20px 20px 0 0;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .modal-backdrop { align-items: center; }
+            .modal-content { height: auto; max-height: 90vh; border-radius: 20px; transform: translateY(50px); }
+        }
+
+        .modal-backdrop.open .modal-content { transform: translateY(0); }
+
+        .modal-hero {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .modal-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0,0,0,0.5);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .modal-body { padding: 1.5rem; margin-top: -40px; z-index: 5; position: relative; }
+
+        .modal-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.1; }
+        
+        .modal-tags { display: flex; gap: 10px; font-size: 0.8rem; color: var(--text-sec); margin-bottom: 1rem; align-items: center; }
+        .tag-badge { border: 1px solid var(--glass-border); padding: 2px 8px; border-radius: 6px; }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 10px;
+            margin-bottom: 1.5rem;
         }
-        .status-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            font-weight: 700;
-            text-transform: uppercase;
+
+        .btn {
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: 0.2s;
         }
-        .status-up {
-            background-color: #28a745;
-            color: #ffffff;
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        
+        .btn-glass { background: rgba(255,255,255,0.1); color: white; }
+        .btn-glass:hover { background: rgba(255,255,255,0.2); }
+
+        .overview-text { line-height: 1.6; color: #ccc; font-size: 0.95rem; margin-bottom: 20px; }
+
+        .trailer-container {
+            margin-top: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: black;
+            aspect-ratio: 16/9;
+            display: none; /* Hidden until loaded */
         }
-        .status-down {
-            background-color: #dc3545;
-            color: #ffffff;
+        
+        .trailer-container iframe { width: 100%; height: 100%; border: none; }
+
+        /* Utility */
+        .hide { display: none !important; }
+        .loader { text-align: center; padding: 20px; color: var(--text-sec); }
+        
+        /* --- NEW ENHANCEMENTS --- */
+        
+        /* Skeleton Loading */
+        .skeleton {
+            background: linear-gradient(90deg, var(--surface) 25%, rgba(255,255,255,0.05) 50%, var(--surface) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
         }
-        .status-checking {
-            background-color: #ffc107;
-            color: #212529;
-            animation: pulse 1.5s infinite ease-in-out;
+        
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
-        .response-time {
-            font-size: 0.9em;
-            color: #aaa;
-            width: 80px;
-            text-align: right;
+        
+        .skeleton-card {
+            flex: 0 0 140px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--surface);
         }
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+        
+        .skeleton-card .skeleton-img {
+            height: 210px;
+            width: 100%;
         }
-        footer {
+        
+        .skeleton-card .skeleton-text {
+            height: 12px;
+            margin: 8px;
+            border-radius: 4px;
+        }
+        
+        /* Error State */
+        .error-container {
             text-align: center;
-            padding: 20px;
-            font-size: 0.8em;
-            color: #777;
-            border-top: 1px solid #333;
+            padding: 2rem;
+            color: var(--text-sec);
+        }
+        
+        .error-container i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .error-container h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+        
+        .error-container p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .retry-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        
+        .retry-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 50;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Filter Options */
+        .filter-options {
+            padding: 1rem 1.5rem;
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        
+        .filter-options::-webkit-scrollbar { display: none; }
+        
+        .filter-dropdown {
+            position: relative;
+            min-width: 120px;
+        }
+        
+        .filter-dropdown select {
+            width: 100%;
+            background: var(--surface);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            appearance: none;
+            cursor: pointer;
+        }
+        
+        .filter-dropdown::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-sec);
+            pointer-events: none;
+        }
+        
+        /* Infinite Scroll Loading */
+        .infinite-scroll-loader {
+            text-align: center;
+            padding: 1rem;
+            color: var(--text-sec);
+        }
+        
+        .infinite-scroll-loader i {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Favorites Badge */
+        .favorite-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 32px;
+            height: 32px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2;
+        }
+        
+        .favorite-badge i {
+            color: var(--text-sec);
+            transition: color 0.2s;
+        }
+        
+        .favorite-badge.active i {
+            color: #FF3B30; /* iOS Red */
+        }
+        
+        /* No Results State */
+        .no-results {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            color: var(--text-sec);
+        }
+        
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--text-sec);
+        }
+        
+        .no-results h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>Server Status</h1>
-            <p>Live uptime monitoring for critical services.</p>
-        </header>
+    <header>
+        <div class="brand">AJMDB</div>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search...">
+            <i class="fas fa-search"></i>
+        </div>
+    </header>
 
-        <ul id="status-list">
-            <!-- Status items will be injected here by JavaScript -->
-        </ul>
-        
-        <footer id="footer-time">
-            Loading...
-        </footer>
+    <div class="category-scroller" id="category-bar">
+        <div class="chip active" onclick="switchTab('home')">All</div>
+        <div class="chip" onclick="filterCategory('en', this)">Hollywood</div>
+        <div class="chip" onclick="filterCategory('hi', this)">Hindi</div>
+        <div class="chip" onclick="filterCategory('ta', this)">Tamil</div>
+        <div class="chip" onclick="filterCategory('te', this)">Telugu</div>
+        <div class="chip" onclick="filterCategory('ml', this)">Malayalam</div>
+    </div>
+
+    <div class="filter-options hide" id="filter-options">
+        <div class="filter-dropdown">
+            <select id="genre-filter">
+                <option value="">All Genres</option>
+            </select>
+        </div>
+        <div class="filter-dropdown">
+            <select id="year-filter">
+                <option value="">All Years</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+            </select>
+        </div>
+        <div class="filter-dropdown">
+            <select id="sort-filter">
+                <option value="popularity.desc">Popularity</option>
+                <option value="vote_average.desc">Rating</option>
+                <option value="release_date.desc">Release Date</option>
+                <option value="title.asc">Title (A-Z)</option>
+            </select>
+        </div>
+    </div>
+
+    <main id="home-view">
+        <div class="section-header">
+            <div class="section-title">Trending Now</div>
+            <div class="see-all" onclick="seeAll('trending')">See All</div>
+        </div>
+        <div class="movie-row" id="trending-row"></div>
+
+        <div class="section-header">
+            <div class="section-title">Popular</div>
+            <div class="see-all" onclick="seeAll('popular')">See All</div>
+        </div>
+        <div class="movie-row" id="popular-row"></div>
+
+        <div class="section-header">
+            <div class="section-title">Top Rated</div>
+            <div class="see-all" onclick="seeAll('top_rated')">See All</div>
+        </div>
+        <div class="movie-row" id="top-rated-row"></div>
+    </main>
+
+    <main id="grid-view" class="hide">
+        <div class="section-header">
+            <div class="section-title" id="grid-title">Results</div>
+        </div>
+        <div class="movie-grid" id="main-grid"></div>
+        <div class="infinite-scroll-loader hide" id="infinite-loader">
+            <i class="fas fa-spinner"></i> Loading more...
+        </div>
+    </main>
+
+    <div class="modal-backdrop" id="modal">
+        <div class="modal-content">
+            <div class="modal-hero">
+                <div class="close-modal" id="close-btn"><i class="fas fa-times"></i></div>
+                <img id="m-poster" src="" alt="">
+            </div>
+            <div class="modal-body">
+                <h2 class="modal-title" id="m-title">Movie Title</h2>
+                <div class="modal-tags">
+                    <span class="tag-badge" id="m-year">2023</span>
+                    <span class="tag-badge" id="m-lang">EN</span>
+                    <span><i class="fas fa-star" style="color: #FFD700;"></i> <span id="m-rating">8.5</span></span>
+                </div>
+                
+                <div class="action-buttons">
+                    <a href="#" id="m-telegram-link" target="_blank" class="btn btn-primary">
+                        <i class="fab fa-telegram-plane"></i> Get Link
+                    </a>
+                    <button id="m-trailer-btn" class="btn btn-glass">
+                        <i class="fas fa-play"></i> Trailer
+                    </button>
+                </div>
+
+                <p class="overview-text" id="m-overview">Movie overview goes here...</p>
+
+                <div class="trailer-container" id="trailer-box"></div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <div class="nav-item active" onclick="switchTab('home')">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </div>
+        <div class="nav-item" onclick="document.getElementById('search-input').focus()">
+            <i class="fas fa-search"></i>
+            <span>Search</span>
+        </div>
+        <div class="nav-item" onclick="showFavorites()">
+            <i class="fas fa-heart"></i>
+            <span>Favorites</span>
+        </div>
+        <div class="nav-item" onclick="filterCategory('hi', null)">
+            <i class="fas fa-compass"></i>
+            <span>Explore</span>
+        </div>
+    </nav>
+    
+    <div class="back-to-top" id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
     </div>
 
     <script>
-        function fetchStatus() {
-            // Fetch data from the /api/status endpoint of our keepalive.py server
-            fetch('/api/status')
-                .then(response => response.json())
-                .then(data => {
-                    const statusList = document.getElementById('status-list');
-                    statusList.innerHTML = ''; // Clear old list
+        // --- CONFIGURATION ---
+        // REPLACE WITH YOUR TMDB API KEY
+        const API_KEY = '8d56b22923f770e9b88d43dc91b258d8'; 
+        
+        const BASE_URL = 'https://api.themoviedb.org/3';
+        const IMG_URL = 'https://image.tmdb.org/t/p/w500';
+        const BACKDROP_URL = 'https://image.tmdb.org/t/p/w780';
+        const TG_BOT = 'https://t.me/sharenshortbot?start=';
 
-                    // Loop through each site from the server
-                    for (const url in data) {
-                        const site = data[url];
-                        
-                        let statusClass = 'status-checking';
-                        let statusText = 'Checking';
-                        if (site.status === 'UP') {
-                            statusClass = 'status-up';
-                            statusText = 'Up';
-                        } else if (site.status === 'DOWN') {
-                            statusClass = 'status-down';
-                            statusText = 'Down';
-                        }
-
-                        const responseTime = site.responseTime || '---';
-
-                        const item = document.createElement('li');
-                        item.className = 'status-item';
-                        item.innerHTML = `
-                            <div class="site-info">
-                                <div class="url">${url}</div>
-                                <div class="last-checked">Last checked: ${site.lastChecked || 'N/A'}</div>
-                            </div>
-                            <div class="site-status">
-                                <span class="response-time">${responseTime}</span>
-                                <span class="status-badge ${statusClass}">${statusText}</span>
-                            </div>
-                        `;
-                        statusList.appendChild(item);
-                    }
-                    
-                    // Update footer timestamp
-                    const now = new Date();
-                    document.getElementById('footer-time').innerText = `Last updated: ${now.toLocaleTimeString()}`;
-                })
-                .catch(error => {
-                    console.error('Error fetching status:', error);
-                    document.getElementById('footer-time').innerText = 'Error loading status.';
-                });
+        // --- DOM ELEMENTS ---
+        const homeView = document.getElementById('home-view');
+        const gridView = document.getElementById('grid-view');
+        const mainGrid = document.getElementById('main-grid');
+        const searchInput = document.getElementById('search-input');
+        const modal = document.getElementById('modal');
+        const trailerBox = document.getElementById('trailer-box');
+        const filterOptions = document.getElementById('filter-options');
+        const genreFilter = document.getElementById('genre-filter');
+        const yearFilter = document.getElementById('year-filter');
+        const sortFilter = document.getElementById('sort-filter');
+        const infiniteLoader = document.getElementById('infinite-loader');
+        const backToTopBtn = document.getElementById('back-to-top');
+        
+        // --- STATE MANAGEMENT ---
+        let currentPage = 1;
+        let currentCategory = null;
+        let currentSearch = null;
+        let isLoading = false;
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        let apiCache = {};
+        
+        // --- INITIAL LOAD ---
+        if(API_KEY === 'YOUR_TMDB_API_KEY') {
+            showError("Please edit the file and insert your TMDB API Key!");
+        } else {
+            // Load skeleton screens first
+            showSkeletons('trending-row');
+            showSkeletons('popular-row');
+            showSkeletons('top-rated-row');
+            
+            // Then load actual data
+            fetchRow(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}`, 'trending-row');
+            fetchRow(`${BASE_URL}/movie/popular?api_key=${API_KEY}`, 'popular-row');
+            fetchRow(`${BASE_URL}/movie/top_rated?api_key=${API_KEY}`, 'top-rated-row');
+            
+            // Load genres
+            fetchGenres();
+        }
+        
+        // --- SKELETON LOADING ---
+        function showSkeletons(containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            for (let i = 0; i < 6; i++) {
+                const skeleton = document.createElement('div');
+                skeleton.className = 'skeleton-card';
+                skeleton.innerHTML = `
+                    <div class="skeleton skeleton-img"></div>
+                    <div class="skeleton skeleton-text"></div>
+                `;
+                container.appendChild(skeleton);
+            }
+        }
+        
+        // --- ERROR HANDLING ---
+        function showError(message) {
+            const errorContainer = document.createElement('div');
+            errorContainer.className = 'error-container';
+            errorContainer.innerHTML = `
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Oops! Something went wrong</h3>
+                <p>${message}</p>
+                <button class="retry-btn" onclick="location.reload()">Try Again</button>
+            `;
+            
+            homeView.innerHTML = '';
+            homeView.appendChild(errorContainer);
+        }
+        
+        function showNoResults(query) {
+            gridView.classList.remove('hide');
+            homeView.classList.add('hide');
+            
+            mainGrid.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-film"></i>
+                    <h3>No results found</h3>
+                    <p>We couldn't find any movies matching "${query}"</p>
+                </div>
+            `;
+        }
+        
+        // --- CACHING ---
+        function cacheData(key, data) {
+            apiCache[key] = {
+                data: data,
+                timestamp: Date.now()
+            };
+        }
+        
+        function getCachedData(key) {
+            const cached = apiCache[key];
+            if (cached && (Date.now() - cached.timestamp) < 3600000) { // Cache for 1 hour
+                return cached.data;
+            }
+            return null;
+        }
+        
+        // --- FETCHING FUNCTIONS ---
+        async function fetchRow(url, containerId) {
+            try {
+                // Check cache first
+                const cachedData = getCachedData(url);
+                if (cachedData) {
+                    renderCards(cachedData.results, document.getElementById(containerId), false);
+                    return;
+                }
+                
+                const res = await fetch(url);
+                if (!res.ok) throw new Error(`API request failed with status ${res.status}`);
+                
+                const data = await res.json();
+                cacheData(url, data);
+                renderCards(data.results, document.getElementById(containerId), false);
+            } catch(e) {
+                console.error(e);
+                const container = document.getElementById(containerId);
+                container.innerHTML = `
+                    <div class="error-container">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h3>Failed to load</h3>
+                        <p>Unable to fetch movies</p>
+                        <button class="retry-btn" onclick="fetchRow('${url}', '${containerId}')">Retry</button>
+                    </div>
+                `;
+            }
         }
 
-        // Fetch status immediately on page load
-        fetchStatus();
+        async function fetchGrid(url, append = false) {
+            if (isLoading) return;
+            isLoading = true;
+            
+            if (!append) {
+                currentPage = 1;
+                mainGrid.innerHTML = '<div class="loader"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+            } else {
+                infiniteLoader.classList.remove('hide');
+            }
+            
+            try {
+                const res = await fetch(`${url}&page=${currentPage}`);
+                if (!res.ok) throw new Error(`API request failed with status ${res.status}`);
+                
+                const data = await res.json();
+                
+                if (!append) {
+                    mainGrid.innerHTML = '';
+                }
+                
+                if (data.results.length === 0 && currentPage === 1) {
+                    showNoResults(currentSearch || currentCategory);
+                    return;
+                }
+                
+                renderCards(data.results, mainGrid, true);
+                
+                // Setup infinite scroll
+                if (data.page < data.total_pages) {
+                    setupInfiniteScroll(url);
+                } else {
+                    infiniteLoader.classList.add('hide');
+                }
+                
+                currentPage++;
+            } catch(e) {
+                console.error(e);
+                if (!append) {
+                    mainGrid.innerHTML = `
+                        <div class="error-container">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <h3>Failed to load</h3>
+                            <p>Unable to fetch movies</p>
+                            <button class="retry-btn" onclick="fetchGrid('${url}')">Retry</button>
+                        </div>
+                    `;
+                } else {
+                    infiniteLoader.innerHTML = '<i class="fas fa-exclamation-circle"></i> Failed to load more';
+                }
+            } finally {
+                isLoading = false;
+                if (append) {
+                    infiniteLoader.classList.add('hide');
+                }
+            }
+        }
 
-        // And then fetch status every 10 seconds
-        setInterval(fetchStatus, 10000);
+        // --- RENDER LOGIC ---
+        function renderCards(movies, container, isGrid) {
+            movies.forEach(movie => {
+                if(!movie.poster_path) return;
+
+                const el = document.createElement('div');
+                el.className = 'card';
+                
+                const isFavorite = favorites.includes(movie.id);
+                
+                el.innerHTML = `
+                    <div class="favorite-badge ${isFavorite ? 'active' : ''}" onclick="toggleFavorite(event, ${movie.id})">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <img src="${IMG_URL + movie.poster_path}" loading="lazy" alt="${movie.title}">
+                    <div class="card-overlay">
+                        <div class="card-rating"><i class="fas fa-star"></i> ${movie.vote_average.toFixed(1)}</div>
+                        <h3 class="card-title">${movie.title}</h3>
+                        <span class="card-year">${movie.release_date ? movie.release_date.split('-')[0] : ''}</span>
+                    </div>
+                `;
+                el.addEventListener('click', () => openModal(movie));
+                container.appendChild(el);
+            });
+        }
+        
+        // --- FAVORITES FUNCTIONALITY ---
+        function toggleFavorite(event, movieId) {
+            event.stopPropagation();
+            
+            const index = favorites.indexOf(movieId);
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push(movieId);
+            }
+            
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            
+            // Update UI
+            const badge = event.currentTarget;
+            badge.classList.toggle('active');
+        }
+        
+        function showFavorites() {
+            homeView.classList.add('hide');
+            gridView.classList.remove('hide');
+            filterOptions.classList.add('hide');
+            
+            document.getElementById('grid-title').innerText = 'Your Favorites';
+            mainGrid.innerHTML = '<div class="loader"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+            
+            // If no favorites, show empty state
+            if (favorites.length === 0) {
+                mainGrid.innerHTML = `
+                    <div class="no-results">
+                        <i class="far fa-heart"></i>
+                        <h3>No favorites yet</h3>
+                        <p>Start adding movies to your favorites to see them here</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Fetch favorite movies
+            const promises = favorites.map(id => 
+                fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`).then(res => res.json())
+            );
+            
+            Promise.all(promises)
+                .then(movies => {
+                    mainGrid.innerHTML = '';
+                    renderCards(movies, mainGrid, true);
+                })
+                .catch(error => {
+                    console.error('Error fetching favorites:', error);
+                    mainGrid.innerHTML = `
+                        <div class="error-container">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <h3>Failed to load favorites</h3>
+                            <p>Unable to fetch your favorite movies</p>
+                            <button class="retry-btn" onclick="showFavorites()">Retry</button>
+                        </div>
+                    `;
+                });
+        }
+        
+        // --- INFINITE SCROLL ---
+        function setupInfiniteScroll(url) {
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !isLoading) {
+                    fetchGrid(url, true);
+                }
+            }, { threshold: 0.1 });
+            
+            observer.observe(infiniteLoader);
+        }
+        
+        // --- BACK TO TOP BUTTON ---
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // --- GENRES ---
+        async function fetchGenres() {
+            try {
+                const res = await fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}`);
+                const data = await res.json();
+                
+                data.genres.forEach(genre => {
+                    const option = document.createElement('option');
+                    option.value = genre.id;
+                    option.textContent = genre.name;
+                    genreFilter.appendChild(option);
+                });
+                
+                genreFilter.addEventListener('change', applyFilters);
+                yearFilter.addEventListener('change', applyFilters);
+                sortFilter.addEventListener('change', applyFilters);
+            } catch(e) {
+                console.error('Error fetching genres:', e);
+            }
+        }
+        
+        function applyFilters() {
+            if (currentCategory || currentSearch) {
+                let url = currentCategory || `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${currentSearch}`;
+                
+                const genreId = genreFilter.value;
+                const year = yearFilter.value;
+                const sortBy = sortFilter.value;
+                
+                if (genreId) url += `&with_genres=${genreId}`;
+                if (year) url += `&primary_release_year=${year}`;
+                if (sortBy) url += `&sort_by=${sortBy}`;
+                
+                fetchGrid(url);
+            }
+        }
+        
+        // --- CATEGORY & SEARCH LOGIC ---
+        function switchTab(tabName) {
+            if(tabName === 'home') {
+                homeView.classList.remove('hide');
+                gridView.classList.add('hide');
+                filterOptions.classList.add('hide');
+                document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                document.querySelector('.chip:first-child').classList.add('active');
+                currentCategory = null;
+                currentSearch = null;
+            }
+        }
+        
+        function filterCategory(lang, chipEl) {
+            // UI Update
+            homeView.classList.add('hide');
+            gridView.classList.remove('hide');
+            filterOptions.classList.remove('hide');
+            
+            if(chipEl) {
+                document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                chipEl.classList.add('active');
+                document.getElementById('grid-title').innerText = chipEl.innerText + " Movies";
+            }
+            
+            // Reset filters
+            genreFilter.value = '';
+            yearFilter.value = '';
+            sortFilter.value = 'popularity.desc';
+            
+            // API Call
+            currentCategory = `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_original_language=${lang}&sort_by=popularity.desc`;
+            currentSearch = null;
+            fetchGrid(currentCategory);
+        }
+        
+        function seeAll(category) {
+            homeView.classList.add('hide');
+            gridView.classList.remove('hide');
+            filterOptions.classList.remove('hide');
+            
+            let title, url;
+            
+            switch(category) {
+                case 'trending':
+                    title = 'Trending Movies';
+                    url = `${BASE_URL}/trending/movie/week?api_key=${API_KEY}`;
+                    break;
+                case 'popular':
+                    title = 'Popular Movies';
+                    url = `${BASE_URL}/movie/popular?api_key=${API_KEY}`;
+                    break;
+                case 'top_rated':
+                    title = 'Top Rated Movies';
+                    url = `${BASE_URL}/movie/top_rated?api_key=${API_KEY}`;
+                    break;
+            }
+            
+            document.getElementById('grid-title').innerText = title;
+            currentCategory = url;
+            currentSearch = null;
+            
+            // Reset filters
+            genreFilter.value = '';
+            yearFilter.value = '';
+            sortFilter.value = 'popularity.desc';
+            
+            fetchGrid(url);
+        }
+
+        searchInput.addEventListener('keyup', (e) => {
+            const query = e.target.value;
+            if(query.length > 1) {
+                homeView.classList.add('hide');
+                gridView.classList.remove('hide');
+                filterOptions.classList.remove('hide');
+                document.getElementById('grid-title').innerText = `Results for "${query}"`;
+                
+                currentSearch = query;
+                currentCategory = null;
+                
+                // Reset filters
+                genreFilter.value = '';
+                yearFilter.value = '';
+                sortFilter.value = 'popularity.desc';
+                
+                fetchGrid(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}`);
+            } else if (query.length === 0) {
+                switchTab('home');
+            }
+        });
+
+        // --- MODAL & TRAILER LOGIC ---
+        async function openModal(movie) {
+            const { id, title, backdrop_path, poster_path, vote_average, release_date, overview, original_language } = movie;
+            
+            // Reset Trailer
+            trailerBox.innerHTML = '';
+            trailerBox.style.display = 'none';
+
+            // Populate Content
+            document.getElementById('m-poster').src = backdrop_path ? BACKDROP_URL + backdrop_path : IMG_URL + poster_path;
+            document.getElementById('m-title').innerText = title;
+            document.getElementById('m-rating').innerText = vote_average.toFixed(1);
+            document.getElementById('m-year').innerText = release_date ? release_date.split('-')[0] : 'N/A';
+            document.getElementById('m-lang').innerText = original_language.toUpperCase();
+            document.getElementById('m-overview').innerText = overview;
+            
+            // Check if favorite
+            const isFavorite = favorites.includes(id);
+            const favoriteBtn = document.getElementById('m-favorite-btn');
+            if (favoriteBtn) {
+                favoriteBtn.classList.toggle('active', isFavorite);
+            }
+            
+            // Telegram Link
+            document.getElementById('m-telegram-link').href = `${TG_BOT}${encodeURIComponent(title)}`;
+
+            // Setup Trailer Button
+            const btn = document.getElementById('m-trailer-btn');
+            btn.onclick = () => loadTrailer(id);
+
+            // Show Modal
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        async function loadTrailer(movieId) {
+            try {
+                const res = await fetch(`${BASE_URL}/movie/${movieId}/videos?api_key=${API_KEY}`);
+                const data = await res.json();
+                const trailer = data.results.find(v => v.site === 'YouTube' && v.type === 'Trailer') || data.results[0];
+                
+                if(trailer) {
+                    trailerBox.style.display = 'block';
+                    trailerBox.innerHTML = `
+                        <iframe src="https://www.youtube.com/embed/${trailer.key}?autoplay=1" allowfullscreen allow="autoplay"></iframe>
+                    `;
+                } else {
+                    alert("No trailer found.");
+                }
+            } catch(e) { console.error("Trailer error", e); }
+        }
+
+        // Close Modal
+        document.getElementById('close-btn').onclick = () => {
+            modal.classList.remove('open');
+            document.body.style.overflow = 'auto';
+            trailerBox.innerHTML = ''; // Stop video
+        };
+        
+        window.onclick = (e) => {
+            if (e.target == modal) document.getElementById('close-btn').click();
+        };
     </script>
 </body>
 </html>
