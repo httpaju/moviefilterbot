@@ -6,6 +6,8 @@
 
 import sys, glob, importlib, logging, logging.config, pytz, asyncio
 from pathlib import Path
+from aiohttp import web
+
 
 # Get logging configurations
 logging.config.fileConfig('logging.conf')
@@ -89,6 +91,7 @@ async def start():
     bind_address = "0.0.0.0"
     await web.TCPSite(app, bind_address, PORT).start()
     await idle()
+    app.router.add_static("/public/", str(PUBLIC_DIR), show_index=True)
 
 
 if __name__ == '__main__':
@@ -96,4 +99,5 @@ if __name__ == '__main__':
         loop.run_until_complete(start())
     except KeyboardInterrupt:
         logging.info('Service Stopped Bye 👋')
+
 
