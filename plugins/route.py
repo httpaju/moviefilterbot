@@ -21,11 +21,11 @@ INDEX_PATH = ROOT / "public" / "index.html"
 
 @routes.get("/", allow_head=True)
 async def root_route_handler(request):
-    # Return the HTML file if present (FileResponse handles HEAD correctly)
     if INDEX_PATH.exists():
-        return web.FileResponse(path=INDEX_PATH)
-    # Fallback (in case file missing)
-    return web.json_response({"AJ Movie Filter Bot"})
+        return web.FileResponse(str(INDEX_PATH))
+
+    return web.json_response({"message": "AJ Movie Filter Bot"})
+
 
 @routes.get(r"/watch/{path:\S+}", allow_head=True)
 async def stream_handler(request: web.Request):
@@ -155,4 +155,5 @@ async def media_streamer(request: web.Request, id: int, secure_hash: str):
             "Accept-Ranges": "bytes",
         },
     )
+
 
