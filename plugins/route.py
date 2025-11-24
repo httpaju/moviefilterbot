@@ -6,6 +6,7 @@ import re, math, logging, secrets, mimetypes, time
 from info import *
 from aiohttp import web
 from aiohttp.http_exceptions import BadStatusLine
+from pathlib import Path
 from TechVJ.bot import multi_clients, work_loads, TechVJBot
 from TechVJ.server.exceptions import FIleNotFound, InvalidHash
 from TechVJ import StartTime, __version__
@@ -15,9 +16,16 @@ from TechVJ.util.render_template import render_page
 
 routes = web.RouteTableDef()
 
+ROOT = Path(__file__).parent
+INDEX_PATH = ROOT / "public" / "index.html"
+
 @routes.get("/", allow_head=True)
 async def root_route_handler(request):
-    return web.json_response("BenFilterBot")
+    # Return the HTML file if present (FileResponse handles HEAD correctly)
+    if INDEX_PATH.exists():
+        return web.FileResponse(path=INDEX_PATH)
+    # Fallback (in case file missing)
+    return web.json_response({"AJ Movie Filter Bot"})
 
 @routes.get(r"/watch/{path:\S+}", allow_head=True)
 async def stream_handler(request: web.Request):
@@ -147,3 +155,4 @@ async def media_streamer(request: web.Request, id: int, secure_hash: str):
             "Accept-Ranges": "bytes",
         },
     )
+
