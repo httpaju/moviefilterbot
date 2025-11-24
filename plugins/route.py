@@ -24,7 +24,6 @@ async def root_route_handler(request):
     if INDEX_PATH.exists():
         return web.Response(text=await INDEX_PATH, content_type='text/html')
 
-    return web.json_response({"message": "AJ Movie Filter Bot"})
 
 
 @routes.get(r"/watch/{path:\S+}", allow_head=True)
@@ -155,6 +154,7 @@ async def media_streamer(request: web.Request, id: int, secure_hash: str):
             "Accept-Ranges": "bytes",
         },
     )
+
 
 
 
