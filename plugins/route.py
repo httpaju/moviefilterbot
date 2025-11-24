@@ -17,12 +17,12 @@ from TechVJ.util.render_template import render_page
 routes = web.RouteTableDef()
 
 ROOT = Path(__file__).parent
-INDEX_PATH = ROOT / "public" / "index.html"
+INDEX_PATH = "public/index.html"
 
 @routes.get("/", allow_head=True)
 async def root_route_handler(request):
     if INDEX_PATH.exists():
-        return web.FileResponse(str(INDEX_PATH))
+        return web.Response(text=await INDEX_PATH, content_type='text/html')
 
     return web.json_response({"message": "AJ Movie Filter Bot"})
 
@@ -155,5 +155,6 @@ async def media_streamer(request: web.Request, id: int, secure_hash: str):
             "Accept-Ranges": "bytes",
         },
     )
+
 
 
