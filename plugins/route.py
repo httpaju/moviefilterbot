@@ -17,13 +17,15 @@ from TechVJ.util.render_template import render_page
 routes = web.RouteTableDef()
 
 ROOT = Path(__file__).parent
-INDEX_PATH = "public/index.html"
+INDEX_PATH = "TechVJ/public/index.html"
+
 
 @routes.get("/", allow_head=True)
 async def root_route_handler(request):
-    if INDEX_PATH.exists():
-        return web.Response(text=await INDEX_PATH, content_type='text/html')
-
+    # Read the HTML file
+    with open(INDEX_PATH, "r", encoding="utf-8") as f:
+        html = f.read()
+    return web.Response(text=html, content_type='text/html')
 
 
 @routes.get(r"/watch/{path:\S+}", allow_head=True)
@@ -154,6 +156,7 @@ async def media_streamer(request: web.Request, id: int, secure_hash: str):
             "Accept-Ranges": "bytes",
         },
     )
+
 
 
 
