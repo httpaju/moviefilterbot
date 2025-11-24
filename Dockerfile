@@ -1,6 +1,6 @@
 
+FROM python:3.10-slim-bullseye
 
-FROM python:3.10.8-slim-buster
 
 RUN apt update && apt upgrade -y
 RUN apt install git -y
@@ -12,3 +12,4 @@ RUN mkdir /VJ-FILTER-BOT
 WORKDIR /VJ-FILTER-BOT
 COPY . /VJ-FILTER-BOT
 CMD ["python", "bot.py"]
+
